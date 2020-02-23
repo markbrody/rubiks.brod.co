@@ -1,0 +1,32 @@
+.bg-white  { background-color: rgba(255, 255, 255, 1); }
+.bg-red    { background-color: rgba(217, 19, 27, 1); }
+.bg-blue   { background-color: rgba(0, 70, 204, 1); }
+.bg-orange { background-color: rgba(255, 111, 5, 1); }
+.bg-green  { background-color: rgba(11, 184, 95, 1); }
+.bg-yellow { background-color: rgba(251, 252, 25, 1); }
+
+.cube {
+    border: 1px solid #999;
+    border-radius: 2px;
+    box-sizing: border-box;
+    margin: 1px;
+    cursor: pointer;
+}
+
+.pixel {
+    float: left;
+    width: 33.333334%;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.pixel:nth-child(-n+3) { border-top: none; }
+.pixel:nth-child(3n+3) { border-right: none; }
+.pixel:nth-child(n+7)  { border-bottom: none; }
+.pixel:nth-child(3n-2) { border-left: none; }
+
+.pixel:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
