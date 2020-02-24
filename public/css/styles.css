@@ -30,3 +30,12 @@
     display: block;
     padding-bottom: 100%;
 }
+
+.active-cube {
+    border: 1px solid #000;
+    opacity: 0.5;
+}
+.completed-cube {
+    opacity: 0.1;
+}
+

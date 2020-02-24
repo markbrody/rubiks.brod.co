@@ -3,50 +3,32 @@
 namespace App;
 
 use App\IndexedColorConverter;
-use stdClass;
 
 class Mosaic
 {
     const DEFAULT_OUTPUT = "/home/mark/Desktop/output.png";
 
-    private $image;
-    private $output;
-    private $width;
+    protected $image;
+    protected $output;
+    protected $width;
     public $palette;
-    private $converter;
-    private $thumbnail;
+    protected $converter;
+    protected $thumbnail;
 
-    public function __construct(stdClass $options) {
+    public function __construct(\stdClass $options) {
         $this->converter = new IndexedColorConverter;
         $this->image = $options->image;
         $this->output = $options->output ?? self::DEFAULT_OUTPUT;
         $this->width = $options->width * 3;
-        $this->dither = $options->dither;
-        $this->palette = [
-            "white" => [255, 255, 255],
-            "red" => [217, 19, 27],
-            "blue" => [0, 70, 204],
-            "orange" => [255, 111, 5],
-            "green" => [11, 184, 95],
-            "yellow" => [251, 252, 25],
-        ];
-    }
-
-    public function convert(): void {
-        $this->resize($this->image, $this->output, $this->width);
-        $image = $this->converter->convertToIndexedColor(
-            imagecreatefrompng($this->output),
-            $this->palette,
-            $this->dither
-        );
-        imagepng($image, $this->output, 0);
-        $this->resize($this->output, $this->output, $this->width);
+        $this->dither = $options->dither ?? 0;
+        $this->palette = $options->palette;
     }
 
     public function convert_to_html() {
         $this->convert();
         $cubes = [];
         $image = imagecreatefrompng($this->output);
+
         for ($h=0; $h<imagesy($image) - imagesy($image) % 3; $h+=3) {
             $cubes[$h/3] = [];
             for ($w=0; $w<imagesx($image); $w+=3) {
@@ -62,11 +44,6 @@ class Mosaic
         return $cubes;
     }
 
-    public function convert_to_rubiks() {
-        $this->set_rubiks_palette();
-        $this->convert();
-    }
-
     private function index_to_rgb(int $index): array {
         $red = ($index >> 16) & 0xff;
         $green = ($index >> 8) & 0xff;
@@ -74,7 +51,7 @@ class Mosaic
         return [$red, $green, $blue];
     }
 
-    private function resize(string $source, string $output, int $width): void {
+    protected function resize(string $source, string $output, int $width): void {
         if (preg_match("/\.png/i", $source))
 	        $im = imagecreatefrompng($source);
         else

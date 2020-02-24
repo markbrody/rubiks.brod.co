@@ -48,7 +48,7 @@
                                 <div class="col-12">
                                     <div class="form-group mb-0">
                                         <label for="dither-input">Dither</label>
-                                        <input id="dither-input" type="range" class="custom-range" min="0" max="1" step="0.2" value="0.8">
+                                        <input id="dither-input" type="range" class="custom-range" min="0" max="1" step="0.2" value="0.4">
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-between">
@@ -60,10 +60,26 @@
                                     <small class="text-muted">1</small>
                                 </div>
                             </div>
+                            <div class="form-row mt-3">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="grayscale-select">Match</label>
+                                        <select id="grayscale-select" class="form-control">
+                                            <option value="0">Nearest Color</option>
+                                            <option value="1" selected>Tone</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-row mt-5">
                                 <div class="col-12 text-center">
                                     <button id="render-button" type="button" class="btn btn-primary">Render</button>
                                 </div>
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-12">
+                                    <div id="preview" class="border"></div>
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -102,6 +118,7 @@
                     _token: $("meta[name=csrf-token]").attr("content"),
                     width: $("#width-input").val(),
                     dither: $("#dither-input").val(),
+                    grayscale: $("#grayscale-select").val(),
                 },
                 success: function(response) {
                     for (var y=0; y<response.length; y++) {
@@ -122,8 +139,18 @@
         
             });
         };
+
         $("#render-button").on("click", function() {
+            $("#preview").empty();
             show();
+        });
+
+        $(document).on("click", ".cube", function() {
+            if ($(this).hasClass("active-cube"))
+                $(this).addClass("completed-cube");
+            $(".cube").removeClass("active-cube");
+            $(this).addClass("active-cube");
+            $("#preview").html($(this).html());
         });
         </script>
     </body>
