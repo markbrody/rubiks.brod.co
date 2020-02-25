@@ -23,7 +23,8 @@ class GrayscaleMosaic extends Mosaic
     public function convert(): void {
         $this->resize($this->image, $this->output, $this->width);
         $resource = imagecreatefrompng($this->output);
-        imagefilter($resource, IMG_FILTER_CONTRAST, -40);
+        imagefilter($resource, IMG_FILTER_BRIGHTNESS, $this->brightness * 20);
+        imagefilter($resource, IMG_FILTER_CONTRAST, $this->contrast * 20);
         imagefilter($resource, IMG_FILTER_GRAYSCALE);
         $image = $this->converter->convertToIndexedColor(
             $resource,

@@ -49,6 +49,36 @@
                             <div class="form-row mt-3">
                                 <div class="col-12">
                                     <div class="form-group mb-0">
+                                        <label for="brightness-input">Brightness</label>
+                                        <input id="brightness-input" type="range" class="custom-range" min="-2" max="2" step="1" value="0">
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-between">
+                                    <small class="text-muted">-2</small>
+                                    <small class="text-muted">-1</small>
+                                    <small class="text-muted">0</small>
+                                    <small class="text-muted">1</small>
+                                    <small class="text-muted">2</small>
+                                </div>
+                            </div>
+                            <div class="form-row mt-3">
+                                <div class="col-12">
+                                    <div class="form-group mb-0">
+                                        <label for="contrast-input">Contrast</label>
+                                        <input id="contrast-input" type="range" class="custom-range" min="-2" max="2" step="1" value="0">
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-between">
+                                    <small class="text-muted">-2</small>
+                                    <small class="text-muted">-1</small>
+                                    <small class="text-muted">0</small>
+                                    <small class="text-muted">1</small>
+                                    <small class="text-muted">2</small>
+                                </div>
+                            </div>
+                            <div class="form-row mt-3">
+                                <div class="col-12">
+                                    <div class="form-group mb-0">
                                         <label for="dither-input">Dither</label>
                                         <input id="dither-input" type="range" class="custom-range" min="0" max="1" step="0.2" value="0.4">
                                     </div>
@@ -114,6 +144,8 @@
             var form_data = new FormData;
             form_data.append("image", $("#hidden-file-input")[0].files[0]);
             form_data.append("width", $("#width-input").val());
+            form_data.append("brightness", $("#brightness-input").val());
+            form_data.append("contrast", $("#contrast-input").val());
             form_data.append("dither", $("#dither-input").val());
             form_data.append("grayscale", $("#grayscale-select").val());
             $.ajax({
@@ -125,13 +157,6 @@
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("X-CSRF-TOKEN", $("meta[name=csrf-token]").attr("content"));
                 },
-                // dataType: "json",
-                // data: {
-                //     _token: $("meta[name=csrf-token]").attr("content"),
-                //     width: $("#width-input").val(),
-                //     dither: $("#dither-input").val(),
-                //     grayscale: $("#grayscale-select").val(),
-                // },
                 success: function(response) {
                     $("#mosaic-container").empty();
                     for (var y=0; y<response.length; y++) {

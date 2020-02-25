@@ -13,6 +13,8 @@ class MosaicController extends Controller
             "image" => $request->file("image"),
             "output" => "/tmp/" . uniqid(),
             "width" => (int) $request->input("width"),
+            "brightness" => (int) $request->input("brightness"),
+            "contrast" => (int) $request->input("contrast"),
             "dither" => (float) $request->input("dither"),
         ];
         if ((bool) $request->input("grayscale"))

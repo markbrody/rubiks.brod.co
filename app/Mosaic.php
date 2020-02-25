@@ -20,6 +20,8 @@ class Mosaic
         $this->image = $options->image;
         $this->output = $options->output ?? self::DEFAULT_OUTPUT;
         $this->width = $options->width * 3;
+        $this->brightness = $options->brightness ?? 0;
+        $this->contrast = $options->contrast ?? 0;
         $this->dither = $options->dither ?? 0;
         $this->palette = $options->palette;
     }
