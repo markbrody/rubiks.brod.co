@@ -19,104 +19,110 @@
         </nav>
         <div class="container">
             <div class="row">
-                <div class="col-12 col-lg-4 mt-4">
+                <div class="col-12 mt-4">
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="hidden-file-input">Image</label>
-                                        <div class="card" style="z-index:1">
-                                            <div class="card-body p-0">
-                                                <input type="file" name="image" id="hidden-file-input" class="hidden-file-input">
-                                                <div id="thumbnail-container" class="thumbnail-container w-100" style="height:120px">
-                                                    <a id="image-upload-label" class="image-upload-label text-white" src="javascript:;">Upload image</a>
+                            <div class="row">
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="hidden-file-input">Image</label>
+                                                <div class="card" style="z-index:1">
+                                                    <div class="card-body p-0">
+                                                        <input type="file" name="image" id="hidden-file-input" class="hidden-file-input">
+                                                        <div id="thumbnail-container" class="thumbnail-container w-100" style="height:120px">
+                                                            <a id="image-upload-label" class="image-upload-label text-white" src="javascript:;">Upload image</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="form-row mt-3">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="width-input">Width</label>
-                                        <input id="width-input" type="number" class="form-control" pattern="[0-9]*" min="1" max="100" value="15">
-                                        <small class="text-muted">Number of cubes</small>
+                                    <div class="form-row mt-3">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="width-input">Width</label>
+                                                <input id="width-input" type="number" class="form-control" pattern="[0-9]*" min="1" max="100" value="15">
+                                                <small class="text-muted">Number of cubes</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="grayscale-select">Match</label>
+                                                <select id="grayscale-select" class="form-control">
+                                                    <option value="0">Nearest Color</option>
+                                                    <option value="1" selected>Tone</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-row mt-3">
-                                <div class="col-12">
-                                    <div class="form-group mb-0">
-                                        <label for="brightness-input">Brightness</label>
-                                        <input id="brightness-input" type="range" class="custom-range" min="-2" max="2" step="1" value="0">
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-row mt-3">
+                                        <div class="col-12">
+                                            <div class="form-group mb-0">
+                                                <label for="brightness-input">Brightness</label>
+                                                <input id="brightness-input" type="range" class="custom-range" min="-2" max="2" step="1" value="0">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <small class="text-muted">-2</small>
+                                            <small class="text-muted">-1</small>
+                                            <small class="text-muted">0</small>
+                                            <small class="text-muted">1</small>
+                                            <small class="text-muted">2</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="col-12">
+                                            <div class="form-group mb-0">
+                                                <label for="contrast-input">Contrast</label>
+                                                <input id="contrast-input" type="range" class="custom-range" min="-2" max="2" step="1" value="0">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <small class="text-muted">-2</small>
+                                            <small class="text-muted">-1</small>
+                                            <small class="text-muted">0</small>
+                                            <small class="text-muted">1</small>
+                                            <small class="text-muted">2</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="col-12">
+                                            <div class="form-group mb-0">
+                                                <label for="dither-input">Dither</label>
+                                                <input id="dither-input" type="range" class="custom-range" min="0" max="1" step="0.2" value="0.4">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <small class="text-muted">0</small>
+                                            <small class="text-muted">0.2</small>
+                                            <small class="text-muted">0.4</small>
+                                            <small class="text-muted">0.6</small>
+                                            <small class="text-muted">0.8</small>
+                                            <small class="text-muted">1</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-5">
+                                        <div class="col-12 text-center">
+                                            <button id="render-button" type="button" class="btn btn-block btn-primary">Render</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-12 d-flex justify-content-between">
-                                    <small class="text-muted">-2</small>
-                                    <small class="text-muted">-1</small>
-                                    <small class="text-muted">0</small>
-                                    <small class="text-muted">1</small>
-                                    <small class="text-muted">2</small>
-                                </div>
-                            </div>
-                            <div class="form-row mt-3">
-                                <div class="col-12">
-                                    <div class="form-group mb-0">
-                                        <label for="contrast-input">Contrast</label>
-                                        <input id="contrast-input" type="range" class="custom-range" min="-2" max="2" step="1" value="0">
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex justify-content-between">
-                                    <small class="text-muted">-2</small>
-                                    <small class="text-muted">-1</small>
-                                    <small class="text-muted">0</small>
-                                    <small class="text-muted">1</small>
-                                    <small class="text-muted">2</small>
-                                </div>
-                            </div>
-                            <div class="form-row mt-3">
-                                <div class="col-12">
-                                    <div class="form-group mb-0">
-                                        <label for="dither-input">Dither</label>
-                                        <input id="dither-input" type="range" class="custom-range" min="0" max="1" step="0.2" value="0.4">
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex justify-content-between">
-                                    <small class="text-muted">0</small>
-                                    <small class="text-muted">0.2</small>
-                                    <small class="text-muted">0.4</small>
-                                    <small class="text-muted">0.6</small>
-                                    <small class="text-muted">0.8</small>
-                                    <small class="text-muted">1</small>
-                                </div>
-                            </div>
-                            <div class="form-row mt-3">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="grayscale-select">Match</label>
-                                        <select id="grayscale-select" class="form-control">
-                                            <option value="0">Nearest Color</option>
-                                            <option value="1" selected>Tone</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row mt-5">
-                                <div class="col-12 text-center">
-                                    <button id="render-button" type="button" class="btn btn-primary">Render</button>
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-12">
-                                    <div id="preview" class="border"></div>
-                                </div> 
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-8 mt-4">
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 col-lg-4">
+                    <div id="preview"></div>
+                </div>
+                <div class="col-12 col-lg-8">
                     <div id="mosaic-container" class="p-0">
                         @foreach(range(0, 15) as $row)
                         <div class="d-flex">
@@ -173,6 +179,7 @@
                         }
                         $("#mosaic-container").append(html);
                     }
+                     $(document).scrollTop( $("#mosaic-container").offset().top );
                 },
         
             });
