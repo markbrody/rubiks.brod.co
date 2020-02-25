@@ -184,11 +184,16 @@
         });
 
         $(document).on("click", ".cube", function() {
-            if ($(this).hasClass("active-cube"))
-                $(this).addClass("completed-cube");
-            $(".cube").removeClass("active-cube");
-            $(this).addClass("active-cube");
-            $("#preview").html($(this).html());
+            if ($(this).hasClass("completed-cube")) {
+                $(this).removeClass("completed-cube");
+            }
+            else {
+                if ($(this).hasClass("active-cube"))
+                    $(this).addClass("completed-cube");
+                $(".cube").removeClass("active-cube");
+                $(this).addClass("active-cube");
+                $("#preview").html($(this).html());
+            }
         });
 
         $("#image-upload-label").on("click", function(){
