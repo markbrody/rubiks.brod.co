@@ -6,7 +6,7 @@ use App\IndexedColorConverter;
 
 class Mosaic
 {
-    const DEFAULT_OUTPUT = "/home/mark/Desktop/output.png";
+    const DEFAULT_OUTPUT = "/tmp/output.png";
 
     protected $image;
     protected $output;
@@ -52,7 +52,7 @@ class Mosaic
     }
 
     protected function resize(string $source, string $output, int $width): void {
-        if (preg_match("/\.png/i", $source))
+        if (preg_match("/png/i", mime_content_type($source)))
 	        $im = imagecreatefrompng($source);
         else
 	        $im = imagecreatefromjpeg($source);

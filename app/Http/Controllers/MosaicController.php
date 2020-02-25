@@ -9,16 +9,16 @@ use Illuminate\Http\Request;
 class MosaicController extends Controller
 {
     public function store(Request $request) {
-        $args = (object) [
-            "image" => "/home/mark/archive/Desktop/mosaic/IMG_0000.jpg",
-            "image" => "/home/mark/archive/Desktop/mosaic/monalisa.jpg",
+        $options = (object) [
+            "image" => $request->file("image"),
+            "output" => "/tmp/" . uniqid(),
             "width" => (int) $request->input("width"),
             "dither" => (float) $request->input("dither"),
         ];
         if ((bool) $request->input("grayscale"))
-            $mosaic = new GrayscaleMosaic($args);
+            $mosaic = new GrayscaleMosaic($options);
         else
-            $mosaic = new ColorMosaic($args);
+            $mosaic = new ColorMosaic($options);
         return $mosaic->convert_to_html();
     }
 }

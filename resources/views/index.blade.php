@@ -10,8 +10,6 @@
         <script src="{{ asset('js/jquery-3.4.1.min.js' ) }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-        <style>
-        </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -27,9 +25,13 @@
                             <div class="form-row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="image-input">Image</label>
-                                        <div class="card">
-                                            <div class="card-body">
+                                        <label for="hidden-file-input">Image</label>
+                                        <div class="card" style="z-index:1">
+                                            <div class="card-body p-0">
+                                                <input type="file" name="image" id="hidden-file-input" class="hidden-file-input">
+                                                <div id="thumbnail-container" class="thumbnail-container w-100" style="height:120px">
+                                                    <a id="image-upload-label" class="image-upload-label text-white" src="javascript:;">Upload image</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -109,18 +111,29 @@
         </div>
         <script>
         var show = function() {
-            $("#mosaic-container").empty();
+            var form_data = new FormData;
+            form_data.append("image", $("#hidden-file-input")[0].files[0]);
+            form_data.append("width", $("#width-input").val());
+            form_data.append("dither", $("#dither-input").val());
+            form_data.append("grayscale", $("#grayscale-select").val());
             $.ajax({
                 url: "/mosaic",
                 type: "POST",
-                dataType: "json",
-                data: {
-                    _token: $("meta[name=csrf-token]").attr("content"),
-                    width: $("#width-input").val(),
-                    dither: $("#dither-input").val(),
-                    grayscale: $("#grayscale-select").val(),
+                data: form_data,
+                processData: false,
+                contentType: false,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("X-CSRF-TOKEN", $("meta[name=csrf-token]").attr("content"));
                 },
+                // dataType: "json",
+                // data: {
+                //     _token: $("meta[name=csrf-token]").attr("content"),
+                //     width: $("#width-input").val(),
+                //     dither: $("#dither-input").val(),
+                //     grayscale: $("#grayscale-select").val(),
+                // },
                 success: function(response) {
+                    $("#mosaic-container").empty();
                     for (var y=0; y<response.length; y++) {
                         var row = response[y];
                         var html = $('<div class="d-flex"></div>');
@@ -152,6 +165,22 @@
             $(this).addClass("active-cube");
             $("#preview").html($(this).html());
         });
+
+        $("#image-upload-label").on("click", function(){
+            $("#hidden-file-input").click();
+        });
+
+        $("#hidden-file-input").on("change", function() {
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function () {
+               $("#thumbnail-container").css("background-image", "url('" + reader.result + "')");
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
+
         </script>
     </body>
 </html>
