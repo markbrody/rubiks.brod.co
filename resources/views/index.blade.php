@@ -14,13 +14,16 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <span class="text-white">hello</span>
+                <span class="text-white">
+                    <img class="logo mr-2" src="{{ asset('images/cube.png') }}" alt="Rubik's Mosaics">
+                    Rubik's Mosaics
+                </span> 
             </div>
         </nav>
         <div class="container">
             <div class="row">
                 <div class="col-12 mt-4">
-                    <div class="card">
+                    <div class="card shadow mb-5">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-lg-6">
@@ -28,17 +31,22 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="hidden-file-input">Image</label>
-                                                <div class="card" style="z-index:1">
+                                                <div class="card border-bottom-0">
                                                     <div class="card-body p-0">
-                                                        <input type="file" name="image" id="hidden-file-input" class="hidden-file-input">
-                                                        <div id="thumbnail-container" class="thumbnail-container w-100" style="height:120px">
-                                                            <a id="image-upload-label" class="image-upload-label text-white" src="javascript:;">Upload image</a>
+                                                        <div id="upload-container">
+                                                            <input type="file" name="image" id="hidden-file-input" class="hidden-file-input">
+                                                            <div id="thumbnail-container" class="thumbnail-container w-100">
+                                                            </div>
                                                         </div>
+                                                        <div id="mosaic-container" style="display:none"></div>
                                                     </div>
                                                 </div>
+                                                <a id="image-upload-label" class="image-upload-label bg-green text-white border border-top-0" href="javascript:;">Upload image</a>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
                                     <div class="form-row mt-3">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -59,54 +67,47 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
                                     <div class="form-row mt-3">
                                         <div class="col-12">
                                             <div class="form-group mb-0">
                                                 <label for="brightness-input">Brightness</label>
-                                                <input id="brightness-input" type="range" class="custom-range" min="-2" max="2" step="1" value="0">
+                                                <input id="brightness-input" type="range" class="custom-range" min="-40" max="40" step="10" value="0">
                                             </div>
                                         </div>
                                         <div class="col-12 d-flex justify-content-between">
-                                            <small class="text-muted">-2</small>
-                                            <small class="text-muted">-1</small>
+                                            <small class="text-muted">-40</small>
                                             <small class="text-muted">0</small>
-                                            <small class="text-muted">1</small>
-                                            <small class="text-muted">2</small>
+                                            <small class="text-muted">40</small>
                                         </div>
                                     </div>
                                     <div class="form-row mt-3">
                                         <div class="col-12">
                                             <div class="form-group mb-0">
                                                 <label for="contrast-input">Contrast</label>
-                                                <input id="contrast-input" type="range" class="custom-range" min="-2" max="2" step="1" value="0">
+                                                <input id="contrast-input" type="range" class="custom-range" min="-40" max="40" step="10" value="0">
                                             </div>
                                         </div>
                                         <div class="col-12 d-flex justify-content-between">
-                                            <small class="text-muted">-2</small>
-                                            <small class="text-muted">-1</small>
+                                            <small class="text-muted">-40</small>
                                             <small class="text-muted">0</small>
-                                            <small class="text-muted">1</small>
-                                            <small class="text-muted">2</small>
+                                            <small class="text-muted">40</small>
                                         </div>
                                     </div>
                                     <div class="form-row mt-3">
                                         <div class="col-12">
                                             <div class="form-group mb-0">
                                                 <label for="dither-input">Dither</label>
-                                                <input id="dither-input" type="range" class="custom-range" min="0" max="1" step="0.2" value="0.4">
+                                                <input id="dither-input" type="range" class="custom-range" min="0" max="1" step="0.1" value="0.4">
                                             </div>
                                         </div>
                                         <div class="col-12 d-flex justify-content-between">
                                             <small class="text-muted">0</small>
-                                            <small class="text-muted">0.2</small>
-                                            <small class="text-muted">0.4</small>
-                                            <small class="text-muted">0.6</small>
-                                            <small class="text-muted">0.8</small>
+                                            <small class="text-muted">0.5</small>
                                             <small class="text-muted">1</small>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-12">
                                     <div class="form-row mt-5">
                                         <div class="col-12 text-center">
                                             <button id="render-button" type="button" class="btn btn-block btn-primary">Render</button>
@@ -118,32 +119,17 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-4">
-                <div class="col-12 col-lg-4">
-                    <div id="preview"></div>
-                </div>
-                <div class="col-12 col-lg-8">
-                    <div id="mosaic-container" class="p-0">
-                        @foreach(range(0, 15) as $row)
-                        <div class="d-flex">
-                            @foreach(range(0, 15) as $cube)
-                            <div class="cube flex-fill">
-                                <div class="pixel bg-white"></div>
-                                <div class="pixel bg-white"></div>
-                                <div class="pixel bg-white"></div>
-                                <div class="pixel bg-white"></div>
-                                <div class="pixel bg-white"></div>
-                                <div class="pixel bg-white"></div>
-                                <div class="pixel bg-white"></div>
-                                <div class="pixel bg-white"></div>
-                                <div class="pixel bg-white"></div>
-                            </div>
-                            @endforeach
+        </div>
+        <div id="mosaic-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="preview"></div>
                         </div>
-                        @endforeach
                     </div>
                 </div>
-            </div>
+          </div>
         </div>
         <script>
         var show = function() {
@@ -179,7 +165,9 @@
                         }
                         $("#mosaic-container").append(html);
                     }
-                     $(document).scrollTop( $("#mosaic-container").offset().top );
+                    $("#upload-container").hide();
+                    $("#mosaic-container").show();
+                    $(document).scrollTop(0);
                 },
         
             });
@@ -195,11 +183,15 @@
                 $(this).removeClass("completed-cube");
             }
             else {
-                if ($(this).hasClass("active-cube"))
+                if ($(this).hasClass("active-cube")) {
                     $(this).addClass("completed-cube");
-                $(".cube").removeClass("active-cube");
-                $(this).addClass("active-cube");
-                $("#preview").html($(this).html());
+                }
+                else {
+                    $(".cube").removeClass("active-cube");
+                    $(this).addClass("active-cube");
+                    $("#preview").html($(this).html());
+                    $("#mosaic-modal").modal();
+                }
             }
         });
 
@@ -216,6 +208,8 @@
             if (file) {
                 reader.readAsDataURL(file);
             }
+            $("#mosaic-container").hide();
+            $("#upload-container").show();
         });
 
         </script>
