@@ -16,7 +16,7 @@
             <div class="container">
                 <span class="text-white">
                     <img class="logo mr-2" src="{{ asset('images/cube.png') }}" alt="Rubik's Mosaics">
-                    Rubik's Mosaics
+                    Rubik's Mosaic Generator
                 </span> 
             </div>
         </nav>
@@ -97,7 +97,7 @@
                                         <div class="col-12">
                                             <div class="form-group mb-0">
                                                 <label for="dither-input">Dither</label>
-                                                <input id="dither-input" type="range" class="custom-range" min="0" max="1" step="0.1" value="0.4">
+                                                <input id="dither-input" type="range" class="custom-range" min="0" max="1" step="0.1" value="0.1">
                                             </div>
                                         </div>
                                         <div class="col-12 d-flex justify-content-between">
