@@ -54,10 +54,16 @@ class Mosaic
     }
 
     protected function resize(string $source, string $output, int $width): void {
+        $exif = @exif_read_data($source);
+        $orientation = $exif['Orientation'] ?? 0;
         if (preg_match("/png/i", mime_content_type($source)))
 	        $im = imagecreatefrompng($source);
         else
 	        $im = imagecreatefromjpeg($source);
+        if ($orientation) {
+            $orientations = [3 => 180, 6 => -90, 8 => 90];
+            imagerotate($im, $orientations[$orientation]);
+        }
 	    $image_x = imagesx($im);
 	    $image_y = imagesy($im);
 	    $height = floor($image_y * ($width / $image_x));
